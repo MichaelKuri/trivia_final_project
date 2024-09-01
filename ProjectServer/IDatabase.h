@@ -3,6 +3,7 @@
 class IDatabase
 {
 public:
+	IDatabase() { open(); };
 	bool open();
 	bool close();
 	int doesUserExist(std::string);
