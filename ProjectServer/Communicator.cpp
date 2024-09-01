@@ -95,6 +95,10 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 {
 	
 	RecvMessage* currRcvMsg = nullptr;
+	char data[100];
+	recv(client_socket, data, 5, 0);
+	std::cout << data;
+
 	//try
 	//{		
 		// get the first message code
