@@ -19,11 +19,11 @@ public:
 	Communicator();
 	~Communicator();
 	void serve();
-
+	void startHandleRequests();
 
 private:
+
 	void bindAndListen();
-	void startHandleRequests();
 	void handleNewClient(const SOCKET client_socket);
 	//void safeDeleteUser(const SOCKET id);
 	//BONUS

@@ -126,6 +126,8 @@
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Communicator.cpp" />
     <ClCompile Include="IDatabase.cpp" />
+    <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
+    <ClCompile Include="JsonResponsePacketSerializer.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="MagshChat.cpp" />
     <ClCompile Include="main.cpp" />
@@ -135,11 +137,17 @@
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ErrorResponse.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Communicator.h" />
     <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="JsonRequestPacketDeserializer.h" />
+    <ClInclude Include="JsonResponsePacketSerializer.h" />
+    <ClInclude Include="LoginRequest.h" />
     <ClInclude Include="LoginRequestHandler.h" />
+    <ClInclude Include="LoginResponse.h" />
     <ClInclude Include="MagshChat.h" />
     <ClInclude Include="RecvMessage.h" />
     <ClInclude Include="RequestHandlerFactory.h" />
@@ -147,6 +155,8 @@
     <ClInclude Include="RequestResult.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Server.h" />
+    <ClInclude Include="SignupRequest.h" />
+    <ClInclude Include="SignupResponse.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>

@@ -1,10 +1,11 @@
 #pragma once
 #include <vector>
+
+
 struct RequestInfo
 {
-	int id;
-
-	int receivalTime;
-
+	int id; //code
+	int receivalTime; 
 	std::vector<char> Buffer;
+
 };
