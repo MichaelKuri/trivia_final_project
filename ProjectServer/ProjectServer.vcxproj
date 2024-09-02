@@ -125,7 +125,7 @@
   <ItemGroup>
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Communicator.cpp" />
-    <ClCompile Include="IDatabase.cpp" />
+    <ClCompile Include="IDatabace.cpp" />
     <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
     <ClCompile Include="JsonResponsePacketSerializer.cpp" />
     <ClCompile Include="LoginManager.cpp" />

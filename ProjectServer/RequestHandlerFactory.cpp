@@ -2,8 +2,8 @@
 
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
-    LoginRequestHandler(*this);
-    return nullptr;
+    LoginRequestHandler* loginhendler = new LoginRequestHandler(*this);
+    return loginhendler;
 }
 
 LoginManager& RequestHandlerFactory::getLoginManager()

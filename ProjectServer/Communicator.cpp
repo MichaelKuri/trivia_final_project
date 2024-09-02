@@ -5,6 +5,7 @@
 #include <string>
 #include <numeric>
 #include "LoginRequestHandler.h"
+#include "Helper.h"
 
 // using static const instead of macros 
 static const unsigned short PORT = 8826;
@@ -42,9 +43,6 @@ void Communicator::serve()
 {
 	bindAndListen();
 
-	//// create new thread for handling message
-	//std::thread tr(&Communicator::handleReceivedMessages, this);
-	//tr.detach();
 
 	while (true)
 	{
@@ -81,8 +79,8 @@ void Communicator::startHandleRequests()
 		throw std::exception(__FUNCTION__);
 
 	TRACE("Client accepted !");
-	LoginRequestHandler* hendler;
-	//_m_clients[client_socket] = hendler;
+	
+	_m_clients[client_socket] = _m_handlerFactory.createLoginRequestHandler();
 	//create new thread for client	and detach from it
 	std::thread tr(&Communicator::handleNewClient, this, client_socket);
 	tr.detach();
@@ -94,16 +92,15 @@ void Communicator::startHandleRequests()
 void Communicator::handleNewClient(const SOCKET client_socket)
 {
 	
-	RecvMessage* currRcvMsg = nullptr;
-	char data[100];
-	recv(client_socket, data, 5, 0);
-	std::cout << data;
+	//createloginrequesthendler()
+	int code = Helper::getMessageTypeCode(client_socket);
+	std::cout << code << std::endl;
 
 	//try
 	//{		
 		// get the first message code
 	
- //		int msgCode = Helper::getMessageTypeCode(client_socket);
+    //		int msgCode = Helper::getMessageTypeCode(client_socket);
 
 	//	while (msgCode != 0 && (msgCode == MT_CLIENT_LOG_IN || msgCode == MT_CLIENT_UPDATE || msgCode == MT_CLIENT_FINISH))
 	//	{
