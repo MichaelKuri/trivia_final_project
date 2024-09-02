@@ -16,7 +16,7 @@ using std::unique_lock;
 using std::vector;
 
 
-Communicator::Communicator()
+Communicator::Communicator(RequestHandlerFactory& factory) : _m_handlerFactory(factory)
 {
 	// notice that we step out to the global namespace
 	// for the resolution of the function socket

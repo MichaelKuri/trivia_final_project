@@ -125,10 +125,12 @@
   <ItemGroup>
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Communicator.cpp" />
+    <ClCompile Include="LoginManager.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
     <ClCompile Include="MagshChat.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="RecvMessage.cpp" />
+    <ClCompile Include="RequestHandlerFactory.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="sqlite3.c" />
     <ClCompile Include="SqliteDataBase.cpp" />
@@ -139,6 +141,8 @@
     <ClInclude Include="Communicator.h" />
     <ClInclude Include="IDatabase.h" />
     <ClInclude Include="IRequestHandler.h" />
+    <ClInclude Include="LoggedUser.h" />
+    <ClInclude Include="LoginManager.h" />
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="MagshChat.h" />
     <ClInclude Include="RecvMessage.h" />

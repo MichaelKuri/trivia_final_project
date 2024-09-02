@@ -1,7 +1,7 @@
 #pragma once
-#pragma once
 #include <string>
-class SqliteDataBase
+#include "IDatabase.h"
+class SqliteDataBase : public IDatabase
 {
 public:
 	SqliteDataBase() { open(); };
