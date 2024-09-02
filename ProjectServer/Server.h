@@ -1,16 +1,16 @@
 #pragma once
-#include "IDatabase.h"
+#include "SqliteDataBase.h"
 #include "Communicator.h"
+#include "RequestHandlerFactory.h"
+
 class Server
 {
 public:
-	Server();
+	Server(IDatabase* database);
 	~Server();
 	void run();
-
 private:
-
 	Communicator m_communicator;
-	IDatabase m_database;
-	//RequestHendlerFcatory m_haendlerFactory;
+	IDatabase* m_database;
+	RequestHandlerFactory m_haendlerFactory;
 };

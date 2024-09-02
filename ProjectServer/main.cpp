@@ -15,8 +15,9 @@ int main()
 	try
 	{
 		// NOTICE at the end of this block the WSA will be closed 
+
 		WSAInitializer wsa_init;
-		Server mainServer;
+		Server mainServer(new SqliteDataBase);
 		mainServer.run();
 		
 

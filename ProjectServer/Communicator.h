@@ -8,6 +8,7 @@
 #include <WinSock2.h>
 #include "RecvMessage.h"
 #include "IRequestHandler.h"
+#include "RequestHandlerFactory.h"
 
 
 // Q: why do we need this class ?
@@ -16,7 +17,7 @@
 class Communicator
 {
 public:
-	Communicator();
+	Communicator(RequestHandlerFactory& factory);
 	~Communicator();
 	void serve();
 	void startHandleRequests();
@@ -38,7 +39,7 @@ private:
 		
 
 	std::map<SOCKET, IRequestHandler*> _m_clients;
-	//RequestHandlerFactory _m_handlerFactory;
+	RequestHandlerFactory& _m_handlerFactory;
 
 	SOCKET _m_serverSocket;
 
