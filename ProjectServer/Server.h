@@ -1,5 +1,5 @@
 #pragma once
-#include "IDatabase.h"
+#include "SqliteDataBase.h"
 #include "Communicator.h"
 class Server
 {
@@ -11,6 +11,6 @@ public:
 private:
 
 	Communicator m_communicator;
-	IDatabase m_database;
+	SqliteDataBase m_database;
 	//RequestHendlerFcatory m_haendlerFactory;
 };

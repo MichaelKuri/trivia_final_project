@@ -1,9 +1,10 @@
 #pragma once
+#pragma once
 #include <string>
-class IDatabase
+class SqliteDataBase
 {
 public:
-	IDatabase();
+	SqliteDataBase() { open(); };
 	bool open();
 	//bool close();
 	int doesUserExist(std::string);
