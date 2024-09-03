@@ -17,10 +17,10 @@ public:
 	~JsonResponsePacketSerializer();
 
 
-	std::vector<char> SerializeResponse(const ErrorResponse& response);
-	std::vector<char> SerializeResponse(const LoginResponse& response);
-	std::vector<char> SerializeResponse(const SignupResponse& response);
-	std::vector<char> ConvertJsonToBuffer(const json& j);
+	static std::vector<char> SerializeResponse(const ErrorResponse& response);
+	static std::vector<char> SerializeResponse(const LoginResponse& response);
+	static std::vector<char> SerializeResponse(const SignupResponse& response);
+	static std::vector<char> ConvertJsonToBuffer(const json& j);
 
 private:
 

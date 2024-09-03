@@ -3,9 +3,6 @@
 class  LoginRequest
 {
 public:
-	 LoginRequest();
-	~ LoginRequest();
-
 	std::string username;
 	std::string password;
 

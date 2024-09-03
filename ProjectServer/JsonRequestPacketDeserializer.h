@@ -12,15 +12,14 @@ using json = nlohmann::json;
 class JsonRequestPacketDeserializer
 {
 public:
-    JsonRequestPacketDeserializer();
-    ~JsonRequestPacketDeserializer();
+   
 
-    LoginRequest deserializeLoginRequest(const std::vector<char>& buffer);
-    SignupRequest deserializeSignupRequest(const std::vector<char>& buffer);
+    static LoginRequest deserializeLoginRequest(const std::vector<char>& buffer);
+    static SignupRequest deserializeSignupRequest(const std::vector<char>& buffer);
 
 private:
 
     // i add helping func to help me with the buffer
-    LoginRequest parseLoginRequest(const std::string& jsonString);
-    SignupRequest parseSignupRequest(const std::string& jsonString);
+    static LoginRequest parseLoginRequest(const std::string& jsonString);
+    static SignupRequest parseSignupRequest(const std::string& jsonString);
 };

@@ -2,16 +2,6 @@
 
 
 
-JsonRequestPacketDeserializer::JsonRequestPacketDeserializer()
-{
-
-}
-
-
-JsonRequestPacketDeserializer::~JsonRequestPacketDeserializer()
-{
-
-}
 
 
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(const std::vector<char>& buffer)

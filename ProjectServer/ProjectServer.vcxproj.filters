@@ -123,6 +123,9 @@
     <ClInclude Include="WSAInitializer.h">
       <Filter>heder files</Filter>
     </ClInclude>
+    <ClInclude Include="MenuRequestHandler.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="heder files">

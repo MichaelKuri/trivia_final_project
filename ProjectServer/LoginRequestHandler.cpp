@@ -1,21 +1,50 @@
 #include "LoginRequestHandler.h"
+#include "LoginRequest.h"
+#include "JsonRequestPacketDeserializer.h"
+#include "LoginResponse.h"
+#include "JsonResponsePacketSerializer.h"
 
-bool LoginRequestHandler::isRequestRelevant(RequestInfo)
+#define OK 200
+#define INCORRECT 201
+bool LoginRequestHandler::isRequestRelevant(RequestInfo rinfo)
 {
-    return false;
+	return (rinfo.id == 1 || rinfo.id == 2 || rinfo.id == 3);
 }
 
-RequestResult LoginRequestHandler::handleRequest(RequestInfo)
+RequestResult LoginRequestHandler::handleRequest(RequestInfo ri)
 {
-    return RequestResult();
+	RequestResult rr;
+	if (ri.id == 1)
+	{
+		rr = login(ri);
+	}
+	else
+	{
+		rr = signup(ri);
+	}
+
+	return rr;
 }
 
-RequestResult LoginRequestHandler::login(RequestInfo)
+RequestResult LoginRequestHandler::login(RequestInfo rinfo )
 {
-    return RequestResult();
+	RequestResult rResult;
+	LoginRequest logReq = JsonRequestPacketDeserializer::deserializeLoginRequest(rinfo.Buffer);
+	bool loginChecked = this->_m_handlerFactory.getLoginManager().login(logReq.username, logReq.password);
+	if (loginChecked)
+	{
+		rResult.newHandler = _m_handlerFactory.createMenuRequestHandler();
+		rResult.response = JsonResponsePacketSerializer::SerializeResponse(LoginResponse(OK));
+	}
+	else
+	{
+		rResult.newHandler = _m_handlerFactory.createLoginRequestHandler();
+		rResult.response = JsonResponsePacketSerializer::SerializeResponse(LoginResponse(INCORRECT));
+	}
+	return rResult;
 }
 
 RequestResult LoginRequestHandler::signup(RequestInfo)
 {
-    return RequestResult();
+	return RequestResult();
 }

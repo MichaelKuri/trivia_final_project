@@ -4,9 +4,11 @@
 #include <iostream>
 #include <string>
 #include <numeric>
+#include <ctime>
 #include "LoginRequestHandler.h"
 #include "Helper.h"
-
+#include "ErrorResponse.h"
+#include "JsonResponsePacketSerializer.h"
 // using static const instead of macros 
 static const unsigned short PORT = 8826;
 static const unsigned int IFACE = 0;
@@ -24,6 +26,8 @@ Communicator::Communicator(RequestHandlerFactory& factory) : _m_handlerFactory(f
 	_m_serverSocket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (_m_serverSocket == INVALID_SOCKET)
 		throw std::exception( __FUNCTION__ " - socket");
+
+	//restart factory
 }
 
 Communicator::~Communicator()
@@ -80,7 +84,12 @@ void Communicator::startHandleRequests()
 
 	TRACE("Client accepted !");
 	
+
+
 	_m_clients[client_socket] = _m_handlerFactory.createLoginRequestHandler();
+
+
+
 	//create new thread for client	and detach from it
 	std::thread tr(&Communicator::handleNewClient, this, client_socket);
 	tr.detach();
@@ -92,205 +101,81 @@ void Communicator::startHandleRequests()
 void Communicator::handleNewClient(const SOCKET client_socket)
 {
 	
-	//createloginrequesthendler()
+	RequestInfo rinfo;
+
+	while (0 == 1)
+	{
+		int msgCode = Helper::getMessageTypeCode(client_socket);
+
+		if (msgCode == 0)
+		{
+			std::cout << "Error: can't reading from user";
+			closesocket(client_socket);
+			return;
+		}
+		
+		rinfo.id = msgCode;
+
+
+
+		//createloginrequesthendler()
+
+
+
+		//get len msg from buffer n convert message len to int  //needs to check!!!!!
+		int msgLen = Helper::getIntPartFromSocket(client_socket, 4);
+		
+
+		char* msgData = new char[msgLen];
+
+		msgData = Helper::getStringPartFromSocket(client_socket, msgLen);
+
+		for (int i = 0; i < msgLen; i++)
+		{
+			rinfo.Buffer.push_back(msgData[i]);
+		}
+
+		//rinfo.receivalTime = 
+		//rinfo.time
+
+
+
+		//if isrequestrelevant(rinfo)
+		if (!(this->_m_clients[client_socket]->isRequestRelevant(rinfo)))
+		{
+			ErrorResponse error;
+			std::string errMsg;
+			error.message = "irelvant code";
+			std::vector<char> errorRes = JsonResponsePacketSerializer::SerializeResponse(error);
+			for (size_t i = 0; i < errorRes.size(); i++)
+			{
+				errMsg += errorRes[i];
+			}
+
+			send(client_socket, errMsg.c_str(), errMsg.size(), 0);
+			return;
+		}
+		else 
+		{
+			RequestResult rr = this->_m_clients[client_socket]->handleRequest(rinfo);
+			delete _m_clients[client_socket];
+			_m_clients[client_socket] = rr.newHandler;
+			std::string strSend;
+			for (size_t i = 0; i < rr.response.size(); i++)
+			{
+				strSend += rr.response[i];
+			}
+			send(client_socket, strSend.c_str(), strSend.size(), 0);
+		}
+
+	}
+	
+
+	
 	int code = Helper::getMessageTypeCode(client_socket);
 	std::cout << code << std::endl;
 
-	//try
-	//{		
-		// get the first message code
-	
-    //		int msgCode = Helper::getMessageTypeCode(client_socket);
-
-	//	while (msgCode != 0 && (msgCode == MT_CLIENT_LOG_IN || msgCode == MT_CLIENT_UPDATE || msgCode == MT_CLIENT_FINISH))
-	//	{
-	//		currRcvMsg = build_receive_message(client_socket, msgCode);
-	//		addReceivedMessage(currRcvMsg);
-
-	//		msgCode = Helper::getMessageTypeCode(client_socket);			
-	//	}
-
-	//	currRcvMsg = build_receive_message(client_socket, MT_CLIENT_EXIT);
-	//	addReceivedMessage(currRcvMsg);
-
-	//}
-	//catch (const std::exception& e)
-	//{
-	//	std::cout << "Exception was catch in function clientHandler. socket=" << client_socket << ", what=" << e.what() << std::endl;
-	//	currRcvMsg = build_receive_message(client_socket, MT_CLIENT_EXIT);
-	//	addReceivedMessage(currRcvMsg);
-	//}
 	closesocket(client_socket);
 }
 
-//void Communicator::addReceivedMessage(RecvMessage* msg)
-//{
-//	unique_lock<mutex> lck(_mtxReceivedMessages);
-//
-//	_messageHandler.push(msg);
-//	lck.unlock();
-//	_msgQueueCondition.notify_all();
-//	
-//}
 
-//RecvMessage* Communicator::build_receive_message(const SOCKET client_socket, const int msg_code)
-//{
-//	RecvMessage* msg = nullptr;
-//	vector<string> values;
-//	if (msg_code == MT_CLIENT_LOG_IN)
-//	{
-//		int userSize = Helper::getIntPartFromSocket(client_socket, 2);
-//		string userName = Helper::getStringPartFromSocket(client_socket, userSize);
-//		values.push_back(userName);
-//	}
-//	else if (msg_code == MT_CLIENT_UPDATE)
-//	{
-//		// Get second end point user name size, and get username
-//		const int second_user_size = Helper::getIntPartFromSocket(client_socket, 2);
-//		const string user_name = Helper::getStringPartFromSocket(client_socket, second_user_size);
-//		values.push_back(user_name);
-//		
-//		// Get message size and get message
-//		const int file_size = Helper::getIntPartFromSocket(client_socket, 5);
-//		const string file_content = Helper::getStringPartFromSocket(client_socket, file_size);
-//		values.push_back(file_content);
-//	}
-//
-//	msg = new RecvMessage(client_socket, msg_code, values);
-//	return msg;
-//
-//}
-
-//
-//// remove the user from queue
-//void Communicator::safeDeleteUser(const SOCKET id)
-//{
-//	try
-//	{
-//		for (unsigned int i = 0; i < _clients.size(); i++)
-//		{
-//			if (_clients[i].first == id)
-//			{
-//				TRACE("REMOVED %d, %s from clients list", id, _clients[i].second.c_str());
-//				_clients.erase(_clients.begin() + i);
-//				
-//			}
-//		}
-//	}
-//	catch (...) {}
-//	
-//}
-//
-//void Communicator::handleReceivedMessages()
-//{
-//	int msgCode = 0;
-//	SOCKET clientSock = 0;
-//	string userName;
-//	while (true)
-//	{
-//		try
-//		{
-//			unique_lock<mutex> lck(_mtxReceivedMessages);
-//
-//			// Wait for clients to enter the queue.
-//			if (_messageHandler.empty())
-//				_msgQueueCondition.wait(lck);
-//
-//			// in case the queue is empty.
-//			if (_messageHandler.empty())
-//				continue;
-//
-//			RecvMessage* currMessage = _messageHandler.front();
-//			_messageHandler.pop();
-//			lck.unlock();
-//
-//			// Extract the data from the tuple.
-//			clientSock = currMessage->getSock();
-//			msgCode = currMessage->getMessageCode();
-//
-//			if (msgCode == MT_CLIENT_LOG_IN)
-//			{
-//				userName = currMessage->getValues()[0];
-//				_clients.emplace_back(clientSock, userName);
-//
-//				TRACE("ADDED new client %d, %s to clients list", clientSock, userName.c_str());
-//
-//				// After login the data in empty.
-//				Helper::send_update_message_to_client(clientSock, "", "", getAllUsernames());
-//			}
-//
-//			else if (msgCode == MT_CLIENT_UPDATE)
-//			{
-//				//TRACE("Recieved update message from current client");
-//				string current_username = get_user_name(currMessage->getSock());
-//				string second_username = currMessage->getValues()[0];
-//				string new_message = currMessage->getValues()[1];
-//				if (!new_message.empty()) {
-//					_doc.write(current_username, second_username, new_message);
-//				}
-//				string conversation;
-//				if (!second_username.empty()) {
-//					conversation = _doc.read(current_username, second_username);
-//				}
-//				auto all_user_names = getAllUsernames();
-//				//std::cout << "All users: " << all_user_names << std::endl;
-//				Helper::send_update_message_to_client(clientSock, conversation, second_username, all_user_names);
-//			}
-//			else if (msgCode == MT_CLIENT_EXIT)
-//			{
-//				TRACE("Recieved exit message from client");
-//				safeDeleteUser(clientSock);
-//			}
-//
-//			delete currMessage;
-//		}
-//		catch (...)
-//		{
-//
-//		}
-//	}
-//}
-//
-//
-//std::string Communicator::getAllUsernames()
-//{
-//	const std::string delimiter = "&";
-//	return std::accumulate(std::begin(_clients), std::end(_clients), std::string(),
-//		[delimiter](const string& lhs, const std::pair<SOCKET, string>& rhs)
-//		{
-//			if (lhs.empty()) return rhs.second;
-//			else
-//				return lhs + delimiter + rhs.second; });
-//}
-//
-//
-//// get current user name (the writer)
-//std::string Communicator::getCurrentUser()
-//{
-//
-//	if (_clients.size() < 1)
-//		return "";
-//
-//	return _clients[0].second;
-//}
-//
-//// get next user in queue
-//std::string Communicator::getNextUser()
-//{
-//	if (_clients.size() < 2)
-//		return "";
-//
-//	return _clients[1].second;
-//}
-//
-//std::string Communicator::get_user_name(const SOCKET id)
-//{
-//	for (const std::pair<SOCKET, string>& elem : _clients)
-//	{
-//		if (elem.first == id)
-//		{
-//			return elem.second;
-//		}		
-//	}
-//	return {};
-//}

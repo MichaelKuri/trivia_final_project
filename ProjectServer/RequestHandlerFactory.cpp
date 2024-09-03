@@ -6,6 +6,11 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
     return loginhendler;
 }
 
+MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler()
+{
+    return nullptr;
+}
+
 LoginManager& RequestHandlerFactory::getLoginManager()
 {
     return _m_loginManager;
