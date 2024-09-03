@@ -22,76 +22,94 @@ bool SqliteDataBase::open()
     rc = sqlite3_exec(db, sql, NULL, NULL, &zErrMsg);
     if (rc == SQLITE_OK)
     {
-        return true;
+        return 1;
     }
 }
 
-//check if user name exsist in the table TO DO: check if work
-int SqliteDataBase::doesUserExist(std::string username)
-{
+//check if user name exsist in the table. return 0 if isnt exists
+int SqliteDataBase::doesUserExist(std::string username) {
     sqlite3* db;
-    char* zErrMsg = 0;
+    sqlite3_stmt* stmt;
     int rc;
     std::string sql;
+    int userExists = 0;
 
-    /* Open database */
+
     rc = sqlite3_open("triviaDb.db", &db);
     if (rc) {
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        exit(0);
+        std::cerr << "Can't open database: " << sqlite3_errmsg(db) << std::endl;
+        return 0;
     }
-    else {
-        fprintf(stderr, "Opened database successfully\n");
+
+ 
+    sql = "SELECT * FROM USER WHERE USER_NAME = ?";
+
+
+    rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, NULL);
+    if (rc != SQLITE_OK) {
+        std::cerr << "Failed to prepare statement: " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_close(db);
+        return 0;
     }
-    sql = "Select * from COMPANY where USER_NAME = " + username + '"';
-    struct sqlite3_stmt* selectstmt;
-    int result = sqlite3_prepare_v2(db, sql.c_str(), -1, &selectstmt, NULL);
-    if (result == SQLITE_OK)
-    {
-        if (sqlite3_step(selectstmt) == SQLITE_ROW)
-        {
-            std::cout << "find the user";
-        }
-        else
-        {
-            std::cout << "user dosent exsist";
-        }
+
+
+    sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+
+    rc = sqlite3_step(stmt);
+    if (rc == SQLITE_ROW) {
+        userExists = 1;
     }
-    sqlite3_finalize(selectstmt);
+    else if (rc != SQLITE_DONE) {
+        std::cerr << "Failed to execute statement: " << sqlite3_errmsg(db) << std::endl;
+    }
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    return userExists;
 }
 
-int SqliteDataBase::doesPasswordMatch(std::string username, std::string password)
-{
-    sqlite3* db;
-    char* zErrMsg = 0;
+int SqliteDataBase::doesPasswordMatch(std::string username, std::string password) {
+    sqlite3* db = nullptr;
+    sqlite3_stmt* stmt = nullptr;
     int rc;
-    std::string sql;
+    int passwordMatches = 0;
 
-    /* Open database */
+
     rc = sqlite3_open("triviaDb.db", &db);
-    if (rc) {
-        fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
-        exit(0);
+    if (rc != SQLITE_OK) {
+        std::cerr << "Error: can't open database " << sqlite3_errmsg(db) << std::endl;
+        return 0;
     }
-    else {
-        fprintf(stderr, "Opened database successfully\n");
+
+ 
+    std::string sql = "SELECT * FROM USER WHERE USER_NAME = ? AND PASSWORD = ?";
+    rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
+    if (rc != SQLITE_OK) {
+        std::cerr << "Error in Request " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_close(db);
+        return 0;
     }
-    sql = "Select * from COMPANY where USER_NAME = " + username +"AND PASSWORD = " + password + '"';
-    struct sqlite3_stmt* selectstmt;
-    int result = sqlite3_prepare_v2(db, sql.c_str(), -1, &selectstmt, NULL);
-    if (result == SQLITE_OK)
-    {
-        if (sqlite3_step(selectstmt) == SQLITE_ROW)
-        {
-            std::cout << "password match";
-        }
-        else
-        {
-            std::cout << "incorect password";
-        }
+
+
+    sqlite3_bind_text(stmt, 1, username.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, password.c_str(), -1, SQLITE_STATIC);
+
+
+    rc = sqlite3_step(stmt);
+    if (rc == SQLITE_ROW) {
+        //the password correct
+        passwordMatches = 1;
     }
-    sqlite3_finalize(selectstmt);
+    else if (rc != SQLITE_DONE) {
+        std::cerr << "Error: not hetzliach" << sqlite3_errmsg(db) << std::endl;
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    return passwordMatches;
 }
+
 
 int SqliteDataBase::addNewUser(std::string username, std::string password, std::string email)
 {

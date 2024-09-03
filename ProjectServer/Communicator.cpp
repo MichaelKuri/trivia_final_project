@@ -100,70 +100,73 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 	while (true)
 	{
 		char code[1];
-		recv(client_socket, code, 1, 0);
-		int msgCode = (int)(code[0]);
+		if (recv(client_socket, code, 1, 0)) {
+			int msgCode = (int)(code[0]);
 
-		if (msgCode == 0)
-		{
-			std::cout << "Error: can't reading from user";
-			closesocket(client_socket);
-			return;
-		}
-		
-		rinfo.id = msgCode;
-
-		char lenField[4];
-		recv(client_socket, lenField, 4, 0);
-		unsigned int msgLen = 0;
-		for (size_t i = 0; i < 4; i++)
-		{
-			msgLen = msgLen << 8;
-			msgLen = msgLen ^ lenField[i];
-		}
-
-		char* msgData = new char[msgLen];
-		recv(client_socket, msgData, msgLen, 0);
-
-		for (int i = 0; i < msgLen; i++)
-		{
-			rinfo.Buffer.push_back(msgData[i]);
-		}
-
-		if (!(this->_m_clients[client_socket]->isRequestRelevant(rinfo)))
-		{
-			ErrorResponse error;
-			std::string errMsg;
-			error.message = "irelvant code";
-			std::vector<char> errorRes = JsonResponsePacketSerializer::SerializeResponse(error);
-			for (size_t i = 0; i < errorRes.size(); i++)
+			if (msgCode == 0)
 			{
-				errMsg += errorRes[i];
+				std::cout << "Error: can't reading from user";
+				closesocket(client_socket);
+				return;
 			}
 
-			send(client_socket, errMsg.c_str(), errMsg.size(), 0);
-			return;
-		}
-		else 
-		{
-			RequestResult rr = this->_m_clients[client_socket]->handleRequest(rinfo);
-			delete _m_clients[client_socket];
-			_m_clients[client_socket] = rr.newHandler;
-			std::string strSend;
-			for (size_t i = 0; i < rr.response.size(); i++)
+			rinfo.id = msgCode;
+
+			char lenField[4];
+			recv(client_socket, lenField, 4, 0);
+			unsigned int msgLen = 0;
+			for (size_t i = 0; i < 4; i++)
 			{
-				if (rr.response[i] =='\0')
-				{
-					strSend += '0';
-				}
-				else
-				{
-					strSend += rr.response[i];
-				}
-				
+				msgLen = msgLen << 8;
+				msgLen = msgLen ^ lenField[i];
 			}
-			send(client_socket, strSend.c_str(), strSend.size(), 0);
+
+			char* msgData = new char[msgLen];
+			recv(client_socket, msgData, msgLen, 0);
+
+			for (int i = 0; i < msgLen; i++)
+			{
+				rinfo.Buffer.push_back(msgData[i]);
+			}
+
+			if (!(this->_m_clients[client_socket]->isRequestRelevant(rinfo)))
+			{
+				ErrorResponse error;
+				std::string errMsg;
+				error.message = "irelvant code";
+				std::vector<char> errorRes = JsonResponsePacketSerializer::SerializeResponse(error);
+				for (size_t i = 0; i < errorRes.size(); i++)
+				{
+					errMsg += errorRes[i];
+				}
+
+				send(client_socket, errMsg.c_str(), errMsg.size(), 0);
+				return;
+			}
+			else
+			{
+				RequestResult rr = this->_m_clients[client_socket]->handleRequest(rinfo);
+				delete _m_clients[client_socket];
+				_m_clients[client_socket] = rr.newHandler;
+				std::string strSend;
+				for (size_t i = 0; i < rr.response.size(); i++)
+				{
+					if (rr.response[i] == '\0')
+					{
+						strSend += '0';
+					}
+					else
+					{
+						strSend += rr.response[i];
+					}
+
+				}
+				send(client_socket, strSend.c_str(), strSend.size(), 0);
+			}
+
 		}
 	}
+	
 	closesocket(client_socket);
 }
 
