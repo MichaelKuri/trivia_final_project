@@ -71,7 +71,6 @@ void Communicator::bindAndListen()
 	if (::bind(_m_serverSocket, (struct sockaddr*)&sa, sizeof(sa)) == SOCKET_ERROR)
 		throw std::exception(__FUNCTION__ " - bind");
 	TRACE("binded");
-
 	if (::listen(_m_serverSocket, SOMAXCONN) == SOCKET_ERROR)
 		throw std::exception(__FUNCTION__ " - listen");
 	TRACE("listening...");
@@ -85,18 +84,12 @@ void Communicator::startHandleRequests()
 
 	TRACE("Client accepted !");
 	
-
-
 	_m_clients[client_socket] = _m_handlerFactory.createLoginRequestHandler();
-
-
 
 	//create new thread for client	and detach from it
 	std::thread tr(&Communicator::handleNewClient, this, client_socket);
 	tr.detach();
-
 }
-
 
 
 void Communicator::handleNewClient(const SOCKET client_socket)
@@ -119,14 +112,6 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 		
 		rinfo.id = msgCode;
 
-
-
-		//createloginrequesthendler()
-
-
-
-		//get len msg from buffer n convert message len to int  //needs to check!!!!!
-		//int msgLen = Helper::getIntPartFromSocket(client_socket, 4);
 		char lenField[4];
 		recv(client_socket, lenField, 4, 0);
 		unsigned int msgLen = 0;
@@ -136,22 +121,14 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 			msgLen = msgLen ^ lenField[i];
 		}
 
-
 		char* msgData = new char[msgLen];
 		recv(client_socket, msgData, msgLen, 0);
-		//msgData = Helper::getStringPartFromSocket(client_socket, msgLen);
 
 		for (int i = 0; i < msgLen; i++)
 		{
 			rinfo.Buffer.push_back(msgData[i]);
 		}
 
-		//rinfo.receivalTime = 
-		//rinfo.time
-
-
-
-		//if isrequestrelevant(rinfo)
 		if (!(this->_m_clients[client_socket]->isRequestRelevant(rinfo)))
 		{
 			ErrorResponse error;
@@ -174,18 +151,19 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 			std::string strSend;
 			for (size_t i = 0; i < rr.response.size(); i++)
 			{
-				strSend += rr.response[i];
+				if (rr.response[i] =='\0')
+				{
+					strSend += '0';
+				}
+				else
+				{
+					strSend += rr.response[i];
+				}
+				
 			}
 			send(client_socket, strSend.c_str(), strSend.size(), 0);
 		}
-
 	}
-	
-
-	
-	int code = Helper::getMessageTypeCode(client_socket);
-	std::cout << code << std::endl;
-
 	closesocket(client_socket);
 }
 

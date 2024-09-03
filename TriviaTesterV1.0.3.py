@@ -149,8 +149,8 @@ try:
     print("\nPacket sent. Waiting for server response...\n")
     
 	# message sent, waiting for server's response
-    message = str(recv(client_socket))
-    cprint("Received response from server:\n" + message, "yellow", "black")
+    message = client_socket.recv(1024)
+    cprint("Received response from server:\n" + message.decode(), "yellow", "black")
 
 except TypeError:
 	wrong_option_error()
