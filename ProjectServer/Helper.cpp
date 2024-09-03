@@ -91,9 +91,5 @@ char* Helper::getPartFromSocket(const SOCKET sc, const int bytesNum, const int f
 		s += std::to_string(sc);
 		throw std::exception(s.c_str());
 	}
-	data[bytesNum] = 0;
-	//std::string received(data);
-	char* recvData = data;
-	delete[] data;
-	return recvData;
+	return data;
 }

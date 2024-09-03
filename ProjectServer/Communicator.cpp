@@ -106,7 +106,9 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 
 	while (true)
 	{
-		int msgCode = Helper::getMessageTypeCode(client_socket);
+		char code[1];
+		recv(client_socket, code, 1, 0);
+		int msgCode = (int)(code[0]);
 
 		if (msgCode == 0)
 		{
@@ -124,12 +126,20 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 
 
 		//get len msg from buffer n convert message len to int  //needs to check!!!!!
-		int msgLen = Helper::getIntPartFromSocket(client_socket, 4);
-		
+		//int msgLen = Helper::getIntPartFromSocket(client_socket, 4);
+		char lenField[4];
+		recv(client_socket, lenField, 4, 0);
+		unsigned int msgLen = 0;
+		for (size_t i = 0; i < 4; i++)
+		{
+			msgLen = msgLen << 8;
+			msgLen = msgLen ^ lenField[i];
+		}
+
 
 		char* msgData = new char[msgLen];
-
-		msgData = Helper::getStringPartFromSocket(client_socket, msgLen);
+		recv(client_socket, msgData, msgLen, 0);
+		//msgData = Helper::getStringPartFromSocket(client_socket, msgLen);
 
 		for (int i = 0; i < msgLen; i++)
 		{

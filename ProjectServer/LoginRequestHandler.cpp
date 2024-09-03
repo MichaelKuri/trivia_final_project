@@ -52,7 +52,7 @@ RequestResult LoginRequestHandler::signup(RequestInfo rinfo)
 {
 	RequestResult rResult;
 	SignupRequest logReq = JsonRequestPacketDeserializer::deserializeSignupRequest(rinfo.Buffer);
-	bool loginChecked = this->_m_handlerFactory.getLoginManager().login(logReq.username, logReq.password);
+	bool loginChecked = this->_m_handlerFactory.getLoginManager().signup(logReq.username, logReq.password, logReq.email);
 	if (loginChecked)
 	{
 		LoginResponse lr;
