@@ -9,6 +9,7 @@
 #include "Helper.h"
 #include "ErrorResponse.h"
 #include "JsonResponsePacketSerializer.h"
+
 // using static const instead of macros 
 static const unsigned short PORT = 8826;
 static const unsigned int IFACE = 0;
@@ -103,7 +104,7 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 	
 	RequestInfo rinfo;
 
-	while (0 == 1)
+	while (true)
 	{
 		int msgCode = Helper::getMessageTypeCode(client_socket);
 

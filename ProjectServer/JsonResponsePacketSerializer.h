@@ -13,8 +13,6 @@ using json = nlohmann::json;
 class JsonResponsePacketSerializer
 {
 public:
-	JsonResponsePacketSerializer();
-	~JsonResponsePacketSerializer();
 
 
 	static std::vector<char> SerializeResponse(const ErrorResponse& response);
@@ -25,15 +23,6 @@ public:
 private:
 
 };
-
-JsonResponsePacketSerializer::JsonResponsePacketSerializer()
-{
-
-}
-
-JsonResponsePacketSerializer::~JsonResponsePacketSerializer()
-{
-}
 
 
 

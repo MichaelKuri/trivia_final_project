@@ -10,10 +10,3 @@ private:
 
 };
 
- LoginRequest:: LoginRequest()
-{
-}
-
- LoginRequest::~ LoginRequest()
-{
-}

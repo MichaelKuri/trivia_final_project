@@ -34,17 +34,38 @@ RequestResult LoginRequestHandler::login(RequestInfo rinfo )
 	if (loginChecked)
 	{
 		rResult.newHandler = _m_handlerFactory.createMenuRequestHandler();
-		rResult.response = JsonResponsePacketSerializer::SerializeResponse(LoginResponse(OK));
+		LoginResponse lr;
+		lr._status = OK;
+		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
 	}
 	else
 	{
+		LoginResponse lr;
+		lr._status = INCORRECT;
 		rResult.newHandler = _m_handlerFactory.createLoginRequestHandler();
-		rResult.response = JsonResponsePacketSerializer::SerializeResponse(LoginResponse(INCORRECT));
+		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
 	}
 	return rResult;
 }
 
-RequestResult LoginRequestHandler::signup(RequestInfo)
+RequestResult LoginRequestHandler::signup(RequestInfo rinfo)
 {
-	return RequestResult();
+	RequestResult rResult;
+	SignupRequest logReq = JsonRequestPacketDeserializer::deserializeSignupRequest(rinfo.Buffer);
+	bool loginChecked = this->_m_handlerFactory.getLoginManager().login(logReq.username, logReq.password);
+	if (loginChecked)
+	{
+		LoginResponse lr;
+		lr._status = OK;
+		rResult.newHandler = _m_handlerFactory.createMenuRequestHandler();
+		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
+	}
+	else
+	{
+		LoginResponse lr;
+		lr._status = INCORRECT;
+		rResult.newHandler = _m_handlerFactory.createLoginRequestHandler();
+		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
+	}
+	return rResult;
 }
