@@ -59,3 +59,53 @@ std::vector<char> JsonResponsePacketSerializer::ConvertJsonToBuffer(const json& 
     }
     return buffer;
 }
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const LogoutResponse& response)
+{
+
+
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const GetRoomsResponse& response)
+{
+
+
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const GetPlayersInRoomResponse& response)
+{
+
+
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const JoinRoomResponse& response)
+{
+
+
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const CreateRoomResponse& response)
+{
+
+
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const getHighScoreResponse& response)
+{
+
+
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const getPersonalStatsResponse& response)
+{
+
+
+
+}

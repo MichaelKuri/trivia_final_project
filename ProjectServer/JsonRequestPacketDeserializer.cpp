@@ -37,3 +37,23 @@ SignupRequest JsonRequestPacketDeserializer::parseSignupRequest(const std::strin
     signupReq.email = j["email"].get<std::string>();
     return signupReq;
 }
+
+GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersRequest(const std::vector<char>& buffer)
+{
+
+
+}
+
+
+JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(const std::vector<char>& buffer)
+{
+
+
+}
+
+
+CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(const std::vector<char>& buffer)
+{
+
+
+}
