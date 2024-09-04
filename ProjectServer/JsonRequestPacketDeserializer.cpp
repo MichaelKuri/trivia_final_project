@@ -37,3 +37,38 @@ SignupRequest JsonRequestPacketDeserializer::parseSignupRequest(const std::strin
     signupReq.email = j["email"].get<std::string>();
     return signupReq;
 }
+
+
+
+GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersRequest(const std::vector<char>& buffer)
+{
+    std::string buffer(buffer.begin(), buffer.end());
+    json j = json::parse(buffer);
+    GetPlayersInRoomRequest request;
+    request.roomId = j["roomId"];
+    return request;
+}
+
+
+JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(const std::vector<char>& buffer)
+{
+    std::string jsonString(buffer.begin(), buffer.end());
+    json j = json::parse(jsonString);
+    JoinRoomRequest request;
+    request.roomId = j["roomId"];  
+    return request;
+}
+
+
+CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(const std::vector<char>& buffer)
+{
+    std::string jsonString(buffer.begin(), buffer.end());
+    json j = json::parse(jsonString);
+    CreateRoomRequest request;
+    request.roomName = j["roomName"].get<std::string>(); 
+    request.maxUsers = j["maxUsers"].get<int>();
+    request.questionCount = j["questionCount"].get<int>();
+    request.answerTimeout = j["answerTimeout"].get<int>();
+    return request;
+}
+

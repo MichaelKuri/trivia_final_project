@@ -8,10 +8,23 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 
 MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler()
 {
+
     return nullptr;
 }
 
 LoginManager& RequestHandlerFactory::getLoginManager()
 {
     return _m_loginManager;
+}
+
+
+StatisticsManager& RequestHandlerFactory::getStatisticsManager()
+{
+    return this->m_statisticsManager;
+}
+
+
+RoomManager& RequestHandlerFactory::getRoomManager()
+{
+    return this->m_roomManager;
 }

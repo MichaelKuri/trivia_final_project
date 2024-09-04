@@ -59,3 +59,73 @@ std::vector<char> JsonResponsePacketSerializer::ConvertJsonToBuffer(const json& 
     }
     return buffer;
 }
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const LogoutResponse& response)
+{
+    json j;
+    j["status"] = response._status;
+    return ConvertJsonToBuffer(j);
+}
+
+
+
+///check with chanoch about the correct syntax in database//////////////////////////////////////////
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const GetRoomsResponse& response)
+{
+    json j;
+    j["status"] = response._status;
+
+    std::vector<std::string> roomNames;
+    for (const auto& room : response.rooms) 
+    {
+        roomNames.push_back(room.name);
+    }
+    j["Rooms"] = roomNames;
+    return ConvertJsonToBuffer(j);
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const GetPlayersInRoomResponse& response)
+{
+    json j;
+    j["PlayersInRoom"] = response.players;
+    return ConvertJsonToBuffer(j);
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const JoinRoomResponse& response)
+{
+    json j;
+    j["status"] = response._status;
+    return ConvertJsonToBuffer(j);
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const CreateRoomResponse& response)
+{
+    json j;
+    j["status"] = response._status;
+    return ConvertJsonToBuffer(j);
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const getHighScoreResponse& response)
+{
+    json j;
+    j["status"] = response._status;
+    j["HighScores"] = response.statistics;
+    return ConvertJsonToBuffer(j);
+}
+
+
+std::vector<char> JsonResponsePacketSerializer::SerializeResponse(const getPersonalStatsResponse& response)
+{
+    json j;
+    j["status"] = response._status;
+    j["UserStatistics"] = response.statistics;
+    return ConvertJsonToBuffer(j);
+}
+

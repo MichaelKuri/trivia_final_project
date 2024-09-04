@@ -2,6 +2,7 @@
 
 
 
+
 Question::Question(char* qu, char* ans1, char* ans2, char* ans3, char* ans4, int correctAns)
 {
 	m_question = qu;
@@ -10,6 +11,9 @@ Question::Question(char* qu, char* ans1, char* ans2, char* ans3, char* ans4, int
 	m_possibleAnswers.push_back(ans3);
 	m_possibleAnswers.push_back(ans4);
 	m_correct_answer = correctAns;
+Question::Question()
+{
+
 }
 
 Question::~Question()
@@ -27,7 +31,6 @@ std::string Question::getQuestion()
 
 std::vector<std::string> Question::getPossibleAnswers()
 {
-
 	return m_possibleAnswers;
 }
 

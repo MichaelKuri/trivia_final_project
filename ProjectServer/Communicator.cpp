@@ -94,80 +94,92 @@ void Communicator::startHandleRequests()
 
 void Communicator::handleNewClient(const SOCKET client_socket)
 {
-	
-	RequestInfo rinfo;
+    RequestInfo rinfo;
 
-	while (true)
-	{
-		char code[1];
-		if (recv(client_socket, code, 1, 0)) {
-			int msgCode = (int)(code[0]);
+    try
+    {
+        while (true)
+        {
+            // acquire the mutex to ensure exclusive access to the client socket and related operations
+            std::lock_guard<std::mutex> lock(_mtxReceivedMessages);
 
-			if (msgCode == 0)
-			{
-				std::cout << "Error: can't reading from user";
-				closesocket(client_socket);
-				return;
-			}
+            char code[1];
+            int bytesReceived = recv(client_socket, code, 1, 0);
+            if (bytesReceived <= 0) 
+            {
+                std::cout << "Error: can't read from user or connection closed";
+                closesocket(client_socket);
+                return;
+            }
 
-			rinfo.id = msgCode;
+            int msgCode = static_cast<int>(code[0]);
 
-			char lenField[4];
-			recv(client_socket, lenField, 4, 0);
-			unsigned int msgLen = 0;
-			for (size_t i = 0; i < 4; i++)
-			{
-				msgLen = msgLen << 8;
-				msgLen = msgLen ^ lenField[i];
-			}
+            if (msgCode == 0)
+            {
+                std::cout << "Error: can't read from user";
+                closesocket(client_socket);
+                return;
+            }
 
-			char* msgData = new char[msgLen];
-			recv(client_socket, msgData, msgLen, 0);
+            rinfo.id = msgCode;
 
-			for (int i = 0; i < msgLen; i++)
-			{
-				rinfo.Buffer.push_back(msgData[i]);
-			}
+            char lenField[4];
+            bytesReceived = recv(client_socket, lenField, 4, 0);
+            if (bytesReceived != 4) 
+            {
+                std::cout << "Error: failed to read length field";
+                closesocket(client_socket);
+                return;
+            }
 
-			if (!(this->_m_clients[client_socket]->isRequestRelevant(rinfo)))
-			{
-				ErrorResponse error;
-				std::string errMsg;
-				error.message = "irelvant code";
-				std::vector<char> errorRes = JsonResponsePacketSerializer::SerializeResponse(error);
-				for (size_t i = 0; i < errorRes.size(); i++)
-				{
-					errMsg += errorRes[i];
-				}
+            unsigned int msgLen = 0;
+            for (size_t i = 0; i < 4; i++)
+            {
+                msgLen = (msgLen << 8) | static_cast<unsigned char>(lenField[i]);
+            }
 
-				send(client_socket, errMsg.c_str(), errMsg.size(), 0);
-				return;
-			}
-			else
-			{
-				RequestResult rr = this->_m_clients[client_socket]->handleRequest(rinfo);
-				delete _m_clients[client_socket];
-				_m_clients[client_socket] = rr.newHandler;
-				std::string strSend;
-				for (size_t i = 0; i < rr.response.size(); i++)
-				{
-					if (rr.response[i] == '\0')
-					{
-						strSend += '0';
-					}
-					else
-					{
-						strSend += rr.response[i];
-					}
+            char* msgData = new char[msgLen];
+            bytesReceived = recv(client_socket, msgData, msgLen, 0);
+            if (bytesReceived != msgLen) 
+            {
+                std::cout << "Error: failed to read message data";
+                delete[] msgData;
+                closesocket(client_socket);
+                return;
+            }
 
-				}
-				send(client_socket, strSend.c_str(), strSend.size(), 0);
-			}
+            rinfo.Buffer.assign(msgData, msgData + msgLen);
+            delete[] msgData;
 
-		}
-	}
-	
-	closesocket(client_socket);
+            if (!(this->_m_clients[client_socket]->isRequestRelevant(rinfo)))
+            {
+                ErrorResponse error;
+                error.message = "irrelevant code";
+                std::vector<char> errorRes = JsonResponsePacketSerializer::SerializeResponse(error);
+                send(client_socket, errorRes.data(), errorRes.size(), 0);
+                return;
+            }
+            else
+            {
+                RequestResult rr = this->_m_clients[client_socket]->handleRequest(rinfo);
+                delete _m_clients[client_socket];
+                _m_clients[client_socket] = rr.newHandler;
+
+                send(client_socket, rr.response.data(), rr.response.size(), 0);
+            }
+        }
+    }
+    catch (const std::exception& e)
+    {
+        std::cout << "exception caught: " << e.what() << std::endl;
+    }
+    catch (...)
+    {
+        std::cout << "unknown exception caught" << std::endl;
+    }
+
+    closesocket(client_socket);
 }
+
 
 
