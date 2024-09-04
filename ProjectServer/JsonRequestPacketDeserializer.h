@@ -7,7 +7,6 @@
 #include "CreateRoomRequest.h"
 #include <cstring>
 #include <string>
-
 #include "json.hpp"
 
 using json = nlohmann::json;

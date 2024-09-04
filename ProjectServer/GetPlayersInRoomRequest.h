@@ -3,5 +3,5 @@
 
 struct GetPlayersInRoomRequest
 {
-	unsigned int roomld;
+	unsigned int roomId;
 };

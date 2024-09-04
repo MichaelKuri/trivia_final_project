@@ -8,7 +8,7 @@
 #define INCORRECT 201
 bool LoginRequestHandler::isRequestRelevant(RequestInfo rinfo)
 {
-	return (rinfo.id == 1 || rinfo.id == 2 || rinfo.id == 3);
+	return (rinfo.id == 1 || rinfo.id == 2 );
 }
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo ri)
