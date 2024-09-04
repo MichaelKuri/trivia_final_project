@@ -97,7 +97,7 @@ bool SqliteDataBase::open()
      sqlite3_close(db);
 }
 
-//check if user name exsist in the table. return 0 if isnt exists
+//check if user name exist in the table. return 0 if isn't exists
 int SqliteDataBase::doesUserExist(std::string username) {
     sqlite3* db;
     sqlite3_stmt* stmt;
@@ -139,6 +139,7 @@ int SqliteDataBase::doesUserExist(std::string username) {
     return userExists;
 }
 
+//check if password match to username
 int SqliteDataBase::doesPasswordMatch(std::string username, std::string password) {
     sqlite3* db = nullptr;
     sqlite3_stmt* stmt = nullptr;
@@ -181,7 +182,7 @@ int SqliteDataBase::doesPasswordMatch(std::string username, std::string password
     return passwordMatches;
 }
 
-
+//add new user name, password, 
 int SqliteDataBase::addNewUser(std::string username, std::string password, std::string email)
 {
 
@@ -220,6 +221,7 @@ int SqliteDataBase::addNewUser(std::string username, std::string password, std::
     return 0;
 }
 
+//callBack func for getQuestions quary
 static int queryCallback(void* data, int argc, char** argv, char** azColName) {
 	std::list<Question>* question = static_cast<std::list<Question> *>(data);;
 	Question q(argv[1], argv[2], argv[3] , argv[4], argv[5], atoi(argv[2]));
@@ -227,7 +229,7 @@ static int queryCallback(void* data, int argc, char** argv, char** azColName) {
 	return 0;
 }
 
-
+//get list of quastions in size of numofQu 
 std::list<Question> SqliteDataBase::getQuestions(int numOfQu)
 {
 	sqlite3* db;
@@ -264,6 +266,7 @@ std::list<Question> SqliteDataBase::getQuestions(int numOfQu)
 	return questions;
 }
 
+//get spesific player avrage answer time
 float SqliteDataBase::getPlayerAverageAnswerTime(std::string userName)
 {
 
@@ -298,6 +301,7 @@ float SqliteDataBase::getPlayerAverageAnswerTime(std::string userName)
     return avregeTime;
 }
 
+//get spesific player num of correct answer
 int SqliteDataBase::getNumOfCorrectAnswers(std::string userName)
 {
     sqlite3* db;
@@ -331,6 +335,7 @@ int SqliteDataBase::getNumOfCorrectAnswers(std::string userName)
     return correctAns;
 }
 
+//get spesific player num of total answer
 int SqliteDataBase::getNumOfTotalAnswers(std::string userName)
 {
     sqlite3* db;
@@ -364,6 +369,7 @@ int SqliteDataBase::getNumOfTotalAnswers(std::string userName)
     return correctAns;
 }
 
+//get spesific player num of games
 int SqliteDataBase::getNumOfPlayerGames(std::string userName)
 {
     sqlite3* db;
@@ -397,6 +403,7 @@ int SqliteDataBase::getNumOfPlayerGames(std::string userName)
     return correctAns;
 }
 
+//get spesific player total score
 int SqliteDataBase::getPlayerScore(std::string userName)
 {
     sqlite3* db;
@@ -430,6 +437,7 @@ int SqliteDataBase::getPlayerScore(std::string userName)
     return correctAns;
 }
 
+//get 3 high scores
 std::vector<std::string> SqliteDataBase::getHighScores()
 {
     sqlite3* db;
@@ -476,5 +484,3 @@ std::vector<std::string> SqliteDataBase::getHighScores()
 
     return topScores;
 }
-
-
