@@ -123,6 +123,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="createTablequ.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Communicator.cpp" />
     <ClCompile Include="IDatabace.cpp" />
@@ -130,7 +131,6 @@
     <ClCompile Include="JsonResponsePacketSerializer.cpp" />
     <ClCompile Include="LoginManager.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
-    <ClCompile Include="MagshChat.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuRequestHandler.cpp" />
     <ClCompile Include="RecvMessage.cpp" />

@@ -22,9 +22,6 @@
     <ClCompile Include="main.cpp">
       <Filter>source files</Filter>
     </ClCompile>
-    <ClCompile Include="MagshChat.cpp">
-      <Filter>source files</Filter>
-    </ClCompile>
     <ClCompile Include="LoginRequestHandler.cpp">
       <Filter>source files</Filter>
     </ClCompile>

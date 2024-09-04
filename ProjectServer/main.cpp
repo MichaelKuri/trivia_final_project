@@ -1,7 +1,7 @@
 #pragma comment (lib, "ws2_32.lib")
 #include "Server.h"
-
 #include "WSAInitializer.h"
+#include "sqlite3.h"
 #include <iostream>
 #include <fstream>
 

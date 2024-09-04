@@ -2,7 +2,10 @@
 #include "IRequestHandler.h"
 #include "LoggedUser.h"
 #include "RequestHandlerFactory.h"
+class RequestHandlerFactory;
+
 #include <iostream>
+
 class MenuRequestHandler : public IRequestHandler
 {
 public:
@@ -11,7 +14,6 @@ public:
 
 	bool isRequestRelevant(RequestInfo);
 	RequestResult handleRequest(RequestInfo);
-
 
 private:
 	LoggedUser m_user;
