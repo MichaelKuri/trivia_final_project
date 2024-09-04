@@ -20,9 +20,5 @@ private:
 	std::vector<std::string> m_possibleAnswers;
 	int m_correct_answer;
 
-
-private:
-	std::string m_question;
-	std::vector<std::string> m_possibleAnswers;
 };
 

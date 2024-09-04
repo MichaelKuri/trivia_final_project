@@ -40,9 +40,9 @@ SignupRequest JsonRequestPacketDeserializer::parseSignupRequest(const std::strin
 
 
 
-GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersRequest(const std::vector<char>& buffer)
+GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersRequest(const std::vector<char>& vec)
 {
-    std::string buffer(buffer.begin(), buffer.end());
+    std::string buffer(vec.begin(), vec.end());
     json j = json::parse(buffer);
     GetPlayersInRoomRequest request;
     request.roomId = j["roomId"];

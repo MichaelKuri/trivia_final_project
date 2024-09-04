@@ -34,9 +34,6 @@
     <ClCompile Include="JsonRequestPacketDeserializer.cpp">
       <Filter>source files</Filter>
     </ClCompile>
-    <ClCompile Include="IDatabace.cpp">
-      <Filter>source files</Filter>
-    </ClCompile>
     <ClCompile Include="Helper.cpp">
       <Filter>source files</Filter>
     </ClCompile>
@@ -52,6 +49,7 @@
     <ClCompile Include="StatisticsManager.cpp">
       <Filter>source files</Filter>
     </ClCompile>
+    <ClCompile Include="createTablequ.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Communicator.h">

@@ -96,10 +96,6 @@ bool SqliteDataBase::open()
      // Close the database connection
      sqlite3_close(db);
 
-	sqlite3* db;
-	char* zErrMsg = 0;
-	int rc;
-	const char* sql;
 	rc = sqlite3_open("triviaDb.db", &db);
 
 	/* Create SQL statement */

@@ -23,7 +23,7 @@ private:
 	LoginManager _m_loginManager;
 	IDatabase* _m_database;
 	RoomManager m_roomManager;
-	StatisticsManager m_statisticsManager
+	StatisticsManager m_statisticsManager;
 
 };
 

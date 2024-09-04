@@ -126,7 +126,6 @@
     <ClCompile Include="createTablequ.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="Communicator.cpp" />
-    <ClCompile Include="IDatabace.cpp" />
     <ClCompile Include="JsonRequestPacketDeserializer.cpp" />
     <ClCompile Include="JsonResponsePacketSerializer.cpp" />
     <ClCompile Include="LoginManager.cpp" />
