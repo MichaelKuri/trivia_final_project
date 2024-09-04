@@ -3,6 +3,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include "sqlite3.h"
+#include "Question.h"
 
 //open and create new table
 bool SqliteDataBase::open()

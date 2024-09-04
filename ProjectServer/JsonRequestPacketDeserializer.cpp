@@ -37,9 +37,3 @@ SignupRequest JsonRequestPacketDeserializer::parseSignupRequest(const std::strin
     signupReq.email = j["email"].get<std::string>();
     return signupReq;
 }
-<<<<<<< Updated upstream
-=======
-
-
-
->>>>>>> Stashed changes
