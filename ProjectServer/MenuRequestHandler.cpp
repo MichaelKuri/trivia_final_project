@@ -2,25 +2,27 @@
 #include "CreateRoomRequest.h"
 #include "CreateRoomResponse.h"
 #include "JsonRequestPacketDeserializer.h"
+#include "JsonResponsePacketSerializer.h"
 
 
 
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo ri)
 {
-	if (ri.id == 8)
-	{
-		this->signout(ri);
-	}
-	else if (ri.id > 2 || ri.id < 8)
+	if (ri.id > 2 || ri.id < 9)
 	{
 		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
 
 
 RequestResult MenuRequestHandler::handleRequest(RequestInfo ri)
 {
+	RequestResult res;
 	unsigned int num;
 	std::vector<RoomData> rooms;
 
@@ -32,30 +34,27 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo ri)
 			//send menu
 			break;
 		case 4:
-			this->createRoom(ri);
+			res = this->createRoom(ri);
 			break;
-		case 5:
-			//needs to change to talk with user/buffer
-			std::cout << "enter room ID: ";
-			std::cin >> num;
-			this->m_handleFactory.getRoomManager().deleteRoom(num);
-			//needs to send to user/buffer
-			break;
-
+	
 		case 6:	//join room
-			rooms = this->m_handleFactory.getRoomManager().getRooms();
-			//needs to send  'rooms' to user/buffer
-
+			res = this->joinRoom(ri);
+			break;
+		case 7:
+			res = this->getRooms(ri);
+			break;
 			 //user gives back roomID and we need to connect'em to this room
 
 			break;
+		case 8:
+			res = this->signout(ri);
 
 		default:
 			break;
 		}
 
 	}
-
+	return res;
 }
 
 
@@ -65,21 +64,14 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo ri)
 //
 //}
 //
-//
-//RequestResult MenuRequestHandler::getRooms(RequestInfo ri)
-//{
-//
-//
-//}
-//
-//
+
 //RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo ri)
 //{
 //
 //
 //}
-//
-//
+
+
 //RequestResult MenuRequestHandler::getPersonalStats(RequestInfo ri)
 //{
 //
@@ -94,11 +86,31 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo ri)
 //}
 //
 //
-//RequestResult MenuRequestHandler::joinRoom(RequestInfo ri)
-//{
-//
-//
-//}
+
+RequestResult MenuRequestHandler::getRooms(RequestInfo)
+{
+	RequestResult res;
+	GetRoomsResponse getroomRes;
+	std::vector<RoomData> rooms = this->m_handleFactory.getRoomManager().getRooms();
+	getroomRes._status = 200;
+	getroomRes.rooms = rooms;
+	res.response = JsonResponsePacketSerializer::SerializeResponse(getroomRes);
+	res.newHandler = this;
+	return res;
+}
+
+RequestResult MenuRequestHandler::joinRoom(RequestInfo ri)
+{
+	RequestResult res;
+	JoinRoomResponse joinroomRes;
+	JoinRoomRequest joinRoomReq = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(ri.Buffer);
+	Room  room = this->m_handleFactory.getRoomManager().getroom(joinRoomReq.roomId);
+	room.addUser(this->m_user);
+	joinroomRes._status = 200;
+	res.response = JsonResponsePacketSerializer::SerializeResponse(joinroomRes);
+	res.newHandler = this;
+	return res;
+}
 
 
 RequestResult MenuRequestHandler::createRoom(RequestInfo ri)
@@ -107,14 +119,17 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo ri)
 	CreateRoomRequest createRoomReq = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(ri.Buffer);
 
 	RoomData rData;
+	RequestResult res;
+	CreateRoomResponse createRoomRes;
 	rData.name = createRoomReq.roomName;
 	rData.maxPlayers = createRoomReq.maxUsers;
 	rData.numOfQuestion = createRoomReq.questionCount;
 	rData.timePerQuestion = createRoomReq.answerTimeout;
 	rData.id = (unsigned int)rData.name[0] * rData.numOfQuestion * 123;
 	this->m_handleFactory.getRoomManager().createRoom(this->m_user, rData);
-	RequestResult res;
-	res.newHandler;
+	createRoomRes._status = 200;
+	res.response = JsonResponsePacketSerializer::SerializeResponse(createRoomRes);
+	res.newHandler = this;
 	return res;
 }
 
