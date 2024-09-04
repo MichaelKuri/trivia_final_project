@@ -22,9 +22,6 @@
     <ClCompile Include="main.cpp">
       <Filter>source files</Filter>
     </ClCompile>
-    <ClCompile Include="MagshChat.cpp">
-      <Filter>source files</Filter>
-    </ClCompile>
     <ClCompile Include="LoginRequestHandler.cpp">
       <Filter>source files</Filter>
     </ClCompile>
@@ -145,9 +142,6 @@
     <ClInclude Include="StatisticsManager.h">
       <Filter>heder files</Filter>
     </ClInclude>
-    <ClInclude Include="RoomData.h">
-      <Filter>heder files</Filter>
-    </ClInclude>
     <ClInclude Include="Question.h">
       <Filter>heder files</Filter>
     </ClInclude>
@@ -160,22 +154,10 @@
     <ClInclude Include="JoinRoomRequest.h">
       <Filter>heder files</Filter>
     </ClInclude>
-    <ClInclude Include="GetRoomsResponse.h">
-      <Filter>heder files</Filter>
-    </ClInclude>
-    <ClInclude Include="GetPlayersInRoomResponse.h">
-      <Filter>heder files</Filter>
-    </ClInclude>
-    <ClInclude Include="GetPlayersInRoomRequest.h">
-      <Filter>heder files</Filter>
-    </ClInclude>
     <ClInclude Include="getPersonalStatsResponse.h">
       <Filter>heder files</Filter>
     </ClInclude>
     <ClInclude Include="getHighScoreResponse.h">
-      <Filter>heder files</Filter>
-    </ClInclude>
-    <ClInclude Include="CreateRoomResponse.h">
       <Filter>heder files</Filter>
     </ClInclude>
     <ClInclude Include="CreateRoomRequest.h">

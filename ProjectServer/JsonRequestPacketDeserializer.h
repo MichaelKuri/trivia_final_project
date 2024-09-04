@@ -4,7 +4,6 @@
 #include "SignupRequest.h"
 #include <cstring>
 #include <string>
-#include "GetPlayersInRoomRequest.h"
 #include "json.hpp"
 
 using json = nlohmann::json;
@@ -16,9 +15,7 @@ public:
 
     static LoginRequest deserializeLoginRequest(const std::vector<char>& buffer);
     static SignupRequest deserializeSignupRequest(const std::vector<char>& buffer);
-    GetPlayersInRoomRequest deserializeGetPlayersRequest(Buffer);
-    JoinRoomRequest deserializeJoinRoomRequest(Buffer);
-    CreateRoomRequest deserializeCreateRoomRequest(Buffer);
+
 private:
 
     // i add helping func to help me with the buffer

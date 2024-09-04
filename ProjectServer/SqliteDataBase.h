@@ -15,11 +15,11 @@ public:
 	int addNewUser(std::string, std::string, std::string);
 	//game information and statistic operations
 	std::list<Question> getQuestions(int);
-	float getPlayerAverageAnswerTime(std::string);
-	int getNumOfCorrectAnswers(std::string);
-	int getNumOfTotalAnswers(std::string);
-	int getNumOfPlayerGames(std::string);
-	int getPlayerScore(std::string);
+	float getPlayerAverageAnswerTime(std::string userName);
+	int getNumOfCorrectAnswers(std::string userName);
+	int getNumOfTotalAnswers(std::string userName);
+	int getNumOfPlayerGames(std::string userName);
+	int getPlayerScore(std::string userName);
 	std::vector<std::string> getHighScores();
 
 private:

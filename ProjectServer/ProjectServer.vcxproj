@@ -131,7 +131,6 @@
     <ClCompile Include="JsonResponsePacketSerializer.cpp" />
     <ClCompile Include="LoginManager.cpp" />
     <ClCompile Include="LoginRequestHandler.cpp" />
-    <ClCompile Include="MagshChat.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuRequestHandler.cpp" />
     <ClCompile Include="Question.cpp" />
@@ -146,13 +145,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CreateRoomRequest.h" />
-    <ClInclude Include="CreateRoomResponse.h" />
     <ClInclude Include="ErrorResponse.h" />
     <ClInclude Include="getHighScoreResponse.h" />
     <ClInclude Include="getPersonalStatsResponse.h" />
-    <ClInclude Include="GetPlayersInRoomRequest.h" />
-    <ClInclude Include="GetPlayersInRoomResponse.h" />
-    <ClInclude Include="GetRoomsResponse.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Communicator.h" />
     <ClInclude Include="IDatabase.h" />
@@ -176,7 +171,6 @@
     <ClInclude Include="RequestInfo.h" />
     <ClInclude Include="RequestResult.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="RoomData.h" />
     <ClInclude Include="RoomManager.h" />
     <ClInclude Include="Server.h" />
     <ClInclude Include="SignupRequest.h" />
