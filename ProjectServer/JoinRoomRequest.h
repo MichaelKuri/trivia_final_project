@@ -3,5 +3,5 @@
 
 struct JoinRoomRequest
 {
-	unsigned int roomld;
+	unsigned int roomId;
 };
