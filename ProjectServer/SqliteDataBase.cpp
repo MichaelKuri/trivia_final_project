@@ -149,4 +149,48 @@ int SqliteDataBase::addNewUser(std::string username, std::string password, std::
     return 0;
 }
 
+static int queryCallback(void* data, int argc, char** argv, char** azColName) {
+	std::list<Question>* question = static_cast<std::list<Question> *>(data);;
+	Question q(argv[1], argv[2], argv[3] , argv[4], argv[5], atoi(argv[2]));
+	question->push_back(q);
+	return 0;
+}
+
+
+std::list<Question> SqliteDataBase::getQuestions(int numOfQu)
+{
+	sqlite3* db;
+	char* errMsg = 0;
+
+	// Open a database connection
+	int rc = sqlite3_open("questions.db", &db);
+	if (rc) {
+		std::cerr << "Can't open database: " << sqlite3_errmsg(db) << "\n";
+		exit;
+	}
+	else {
+		std::cout << "Opened database successfully\n";
+	}
+
+	// Query to retrieve 3 questions
+	std::string querySQL = "SELECT * FROM Quiz LIMIT " + std::to_string(numOfQu) + ";";
+
+	// Vector to hold the results
+	std::list<Question> questions;
+
+	// Execute the query
+	rc = sqlite3_exec(db, querySQL.c_str(), queryCallback, &questions, &errMsg);
+	if (rc != SQLITE_OK) {
+		std::cerr << "SQL error: " << errMsg << "\n";
+		sqlite3_free(errMsg);
+	}
+	else {
+		std::cout << "Query executed successfully\n";
+	}
+	
+	// Close the database connection
+	sqlite3_close(db);
+	return questions;
+}
+
 

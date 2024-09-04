@@ -5,6 +5,7 @@
 #include "MenuRequestHandler.h"
 class LoginRequestHandler;
 class LoginManager;
+class MenuRequestHandler;
 class RequestHandlerFactory
 {
 public:
