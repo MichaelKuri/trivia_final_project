@@ -60,17 +60,28 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo ri)
 
 RequestResult MenuRequestHandler::signout(RequestInfo ri)
 {
+	LogoutResponse logoutRes;
+	logoutRes._status = 999;
+	RequestResult res;
 	std::string name = this->m_user.getUsername();
 	this->m_handleFactory.getLoginManager().logout(name);
 	std::vector<Room> rooms = this->m_handleFactory.getRoomManager().getRoomsStructs();
 	for (auto i = rooms.begin();  i != rooms.end();  i++)
 	{
-		if (std::find(i->getAllUsers().begin(), i->getAllUsers().end(), name) != i->getAllUsers().end())
+		std::vector<LoggedUser> users = i->getAllUsers();
+		for (auto itr = users.begin(); itr != users.end(); i++)
 		{
-			i->removeUser(m_user);
+			if (itr->getUsername() == m_user.getUsername())
+			{
+				i->removeUser(m_user);
+			}
 		}
 			
 	}
+	res.response = JsonResponsePacketSerializer::SerializeResponse(logoutRes);
+	res.newHandler = m_handleFactory.createLoginRequestHandler();
+	return res;
+
 }
 
 
@@ -82,7 +93,7 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo ri)
 	Room currentRoom = this->m_handleFactory.getRoomManager().getRoom(getPlayers.roomId);
 	GetPlayersInRoomResponse getplayerRes;
 	std::vector<LoggedUser> allPlayers = currentRoom.getAllUsers() ;
-	std::for_each(allPlayers.begin(), allPlayers.end(), [&getplayerRes](LoggedUser user) { getplayerRes.players.push_back(user.getUsername()); });
+	std::for_each(allPlayers.begin(), allPlayers.end(), [&getplayerRes](auto user) { getplayerRes.players.push_back(user.getUsername()); });
 	res.response = JsonResponsePacketSerializer::SerializeResponse(getplayerRes);
 	res.newHandler = this;
 	return res;

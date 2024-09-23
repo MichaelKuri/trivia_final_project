@@ -15,13 +15,13 @@ public:
 	virtual int doesPasswordMatch(std::string, std::string)=0;
 	virtual int addNewUser(std::string, std::string, std::string)=0;
 
-	std::list<Question> getQuestions(int einlimusag);
-	float getPlayersAverageAnswerTime(std::string einlimusag);
-	int getNumOfCorrectAnswers(std::string einlimusag);
-	int getNumOfTotalAnswers(std::string einlimusag);
-	int getNumOfPlayerGames(std::string einlimusag);
-	int getPlayerScore(std::string einlimusag);
-	std::vector<std::string> getHighScores(std::string einlimusag);
+	virtual std::list<Question> getQuestions(int einlimusag);
+	virtual float getPlayersAverageAnswerTime(std::string einlimusag);
+	virtual int getNumOfCorrectAnswers(std::string einlimusag);
+	virtual int getNumOfTotalAnswers(std::string );
+	virtual int getNumOfPlayerGames(std::string einlimusag);
+	virtual int getPlayerScore(std::string einlimusag);
+	virtual std::vector<std::string> getHighScores();
 
 private:
 	std::string dbName = "triviaDb";
