@@ -58,18 +58,36 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo ri)
 }
 
 
-//RequestResult MenuRequestHandler::signout(RequestInfo ri)
-//{
-//	//delete user 
-//
-//}
-//
+RequestResult MenuRequestHandler::signout(RequestInfo ri)
+{
+	std::string name = this->m_user.getUsername();
+	this->m_handleFactory.getLoginManager().logout(name);
+	std::vector<Room> rooms = this->m_handleFactory.getRoomManager().getRoomsStructs();
+	for (auto i = rooms.begin();  i != rooms.end();  i++)
+	{
+		if (std::find(i->getAllUsers().begin(), i->getAllUsers().end(), name) != i->getAllUsers().end())
+		{
+			i->removeUser(m_user);
+		}
+			
+	}
+}
 
-//RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo ri)
-//{
-//
-//
-//}
+
+RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo ri)
+{
+
+	RequestResult res;
+	GetPlayersInRoomRequest getPlayers = JsonRequestPacketDeserializer::deserializeGetPlayersRequest(ri.Buffer);
+	Room currentRoom = this->m_handleFactory.getRoomManager().getRoom(getPlayers.roomId);
+	GetPlayersInRoomResponse getplayerRes;
+	std::vector<LoggedUser> allPlayers = currentRoom.getAllUsers() ;
+	std::for_each(allPlayers.begin(), allPlayers.end(), [&getplayerRes](LoggedUser user) { getplayerRes.players.push_back(user.getUsername()); });
+	res.response = JsonResponsePacketSerializer::SerializeResponse(getplayerRes);
+	res.newHandler = this;
+	return res;
+}
+
 
 
 //RequestResult MenuRequestHandler::getPersonalStats(RequestInfo ri)
@@ -104,7 +122,7 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo ri)
 	RequestResult res;
 	JoinRoomResponse joinroomRes;
 	JoinRoomRequest joinRoomReq = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(ri.Buffer);
-	Room  room = this->m_handleFactory.getRoomManager().getroom(joinRoomReq.roomId);
+	Room  room = this->m_handleFactory.getRoomManager().getRoom(joinRoomReq.roomId);
 	room.addUser(this->m_user);
 	joinroomRes._status = 200;
 	res.response = JsonResponsePacketSerializer::SerializeResponse(joinroomRes);

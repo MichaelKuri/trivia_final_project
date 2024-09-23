@@ -6,7 +6,7 @@ LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
     return loginhendler;
 }
 
-MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler()
+MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(LoggedUser)
 {
 
     return nullptr;

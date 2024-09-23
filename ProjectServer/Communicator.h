@@ -1,6 +1,5 @@
 #pragma once
 
-#include "MagshChat.h"
 #include <map>
 #include <queue>
 #include <mutex>

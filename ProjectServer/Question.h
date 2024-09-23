@@ -6,10 +6,6 @@ class Question
 {
 public:
 	Question(char*, char*, char*, char*, char*, int);
-  
-	Question();
-  
-	~Question();
 
 	std::string getQuestion();
 	std::vector<std::string> getPossibleAnswers();

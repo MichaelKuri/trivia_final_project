@@ -50,6 +50,7 @@
       <Filter>source files</Filter>
     </ClCompile>
     <ClCompile Include="createTablequ.cpp" />
+    <ClCompile Include="Room.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Communicator.h">
@@ -91,9 +92,6 @@
     <ClInclude Include="LoginResponse.h">
       <Filter>heder files</Filter>
     </ClInclude>
-    <ClInclude Include="MagshChat.h">
-      <Filter>heder files</Filter>
-    </ClInclude>
     <ClInclude Include="RecvMessage.h">
       <Filter>heder files</Filter>
     </ClInclude>
@@ -130,21 +128,49 @@
     <ClInclude Include="MenuRequestHandler.h">
       <Filter>heder files</Filter>
     </ClInclude>
-    <ClInclude Include="GetRoomsResponse.h" />
-    <ClInclude Include="GetPlayersInRoomResponse.h" />
-    <ClInclude Include="GetPlayersInRoomRequest.h" />
-    <ClInclude Include="getPersonalStatsResponse.h" />
-    <ClInclude Include="getHighScoreResponse.h" />
-    <ClInclude Include="CreateRoomRequest.h" />
-    <ClInclude Include="CreateRoomResponse.h" />
-    <ClInclude Include="JoinRoomRequest.h" />
-    <ClInclude Include="JoinRoomResponse.h" />
-    <ClInclude Include="LogoutResponse.h" />
-    <ClInclude Include="Question.h" />
-    <ClInclude Include="RoomData.h" />
-    <ClInclude Include="Room.h" />
-    <ClInclude Include="RoomManager.h" />
     <ClInclude Include="StatisticsManager.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="getHighScoreResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="getPersonalStatsResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="GetPlayersInRoomRequest.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="GetPlayersInRoomResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="GetRoomsResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="JoinRoomRequest.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="JoinRoomResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogoutResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateRoomRequest.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="CreateRoomResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="Question.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="Room.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomData.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomManager.h">
       <Filter>heder files</Filter>
     </ClInclude>
   </ItemGroup>

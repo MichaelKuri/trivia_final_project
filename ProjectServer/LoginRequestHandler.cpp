@@ -33,7 +33,7 @@ RequestResult LoginRequestHandler::login(RequestInfo rinfo )
 	bool loginChecked = this->_m_handlerFactory.getLoginManager().login(logReq.username, logReq.password);
 	if (loginChecked)
 	{
-		rResult.newHandler = _m_handlerFactory.createMenuRequestHandler();
+		rResult.newHandler = _m_handlerFactory.createMenuRequestHandler(LoggedUser(logReq.username));
 		LoginResponse lr;
 		lr._status = OK;
 		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
@@ -57,7 +57,7 @@ RequestResult LoginRequestHandler::signup(RequestInfo rinfo)
 	{
 		LoginResponse lr;
 		lr._status = OK;
-		rResult.newHandler = _m_handlerFactory.createMenuRequestHandler();
+		rResult.newHandler = _m_handlerFactory.createMenuRequestHandler(LoggedUser(logReq.username));
 		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
 	}
 	else

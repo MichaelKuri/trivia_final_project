@@ -134,6 +134,7 @@
     <ClCompile Include="MenuRequestHandler.cpp" />
     <ClCompile Include="RecvMessage.cpp" />
     <ClCompile Include="RequestHandlerFactory.cpp" />
+    <ClCompile Include="Room.cpp" />
     <ClCompile Include="RoomManager.cpp" />
     <ClCompile Include="Server.cpp" />
     <ClCompile Include="sqlite3.c" />
@@ -165,7 +166,6 @@
     <ClInclude Include="LoginRequestHandler.h" />
     <ClInclude Include="LoginResponse.h" />
     <ClInclude Include="LogoutResponse.h" />
-    <ClInclude Include="MagshChat.h" />
     <ClInclude Include="MenuRequestHandler.h" />
     <ClInclude Include="Question.h" />
     <ClInclude Include="RecvMessage.h" />
