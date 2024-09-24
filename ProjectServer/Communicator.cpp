@@ -94,6 +94,8 @@ void Communicator::startHandleRequests()
 
 void Communicator::handleNewClient(const SOCKET client_socket)
 {
+    std::string firstmsg = "hello";
+    send(client_socket, firstmsg.c_str(), 6, 0);
     RequestInfo rinfo;
 
     try

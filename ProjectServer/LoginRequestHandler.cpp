@@ -3,9 +3,8 @@
 #include "JsonRequestPacketDeserializer.h"
 #include "LoginResponse.h"
 #include "JsonResponsePacketSerializer.h"
+#include "triviaProtocol.h"
 
-#define OK 200
-#define INCORRECT 201
 bool LoginRequestHandler::isRequestRelevant(RequestInfo rinfo)
 {
 	return (rinfo.id == 1 || rinfo.id == 2 );
@@ -14,7 +13,7 @@ bool LoginRequestHandler::isRequestRelevant(RequestInfo rinfo)
 RequestResult LoginRequestHandler::handleRequest(RequestInfo ri)
 {
 	RequestResult rr;
-	if (ri.id == 1)
+	if (ri.id == LOGIN)
 	{
 		rr = login(ri);
 	}
@@ -35,13 +34,13 @@ RequestResult LoginRequestHandler::login(RequestInfo rinfo )
 	{
 		rResult.newHandler = _m_handlerFactory.createMenuRequestHandler(LoggedUser(logReq.username));
 		LoginResponse lr;
-		lr._status = OK;
+		lr._status = SUCSESS;
 		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
 	}
 	else
 	{
 		LoginResponse lr;
-		lr._status = INCORRECT;
+		lr._status = FAILD;
 		rResult.newHandler = _m_handlerFactory.createLoginRequestHandler();
 		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
 	}
@@ -56,14 +55,14 @@ RequestResult LoginRequestHandler::signup(RequestInfo rinfo)
 	if (loginChecked)
 	{
 		LoginResponse lr;
-		lr._status = OK;
+		lr._status = SUCSESS;
 		rResult.newHandler = _m_handlerFactory.createMenuRequestHandler(LoggedUser(logReq.username));
 		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
 	}
 	else
 	{
 		LoginResponse lr;
-		lr._status = INCORRECT;
+		lr._status = FAILD;
 		rResult.newHandler = _m_handlerFactory.createLoginRequestHandler();
 		rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
 	}

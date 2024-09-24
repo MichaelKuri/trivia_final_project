@@ -1,8 +1,5 @@
 #include "Question.h"
 
-
-
-
 Question::Question(char* qu, char* ans1, char* ans2, char* ans3, char* ans4, int correctAns)
 {
 	m_question = qu;

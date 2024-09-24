@@ -3,7 +3,7 @@
 #include "CreateRoomResponse.h"
 #include "JsonRequestPacketDeserializer.h"
 #include "JsonResponsePacketSerializer.h"
-
+#include "triviaProtocol.h"
 
 
 
@@ -30,13 +30,9 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo ri)
 	{
 		switch (ri.id)//msgCode
 		{
-		case 3:
-			//send menu
-			break;
 		case 4:
 			res = this->createRoom(ri);
 			break;
-	
 		case 6:	//join room
 			res = this->joinRoom(ri);
 			break;
@@ -44,7 +40,6 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo ri)
 			res = this->getRooms(ri);
 			break;
 			 //user gives back roomID and we need to connect'em to this room
-
 			break;
 		case 8:
 			res = this->signout(ri);

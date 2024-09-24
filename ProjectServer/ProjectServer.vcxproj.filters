@@ -58,6 +58,12 @@
     <ClCompile Include="Room.cpp">
       <Filter>source files</Filter>
     </ClCompile>
+    <ClCompile Include="RoomAdminRequestHandler.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomMemberRequestHandler.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Communicator.h">
@@ -178,6 +184,11 @@
       <Filter>heder files</Filter>
     </ClInclude>
     <ClInclude Include="RoomManager.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomMemberRequestHandler.h" />
+    <ClInclude Include="triviaProtocol.h" />
+    <ClInclude Include="RoomAdminRequestHandler.h">
       <Filter>heder files</Filter>
     </ClInclude>
   </ItemGroup>
