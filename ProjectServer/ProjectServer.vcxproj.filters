@@ -49,9 +49,15 @@
     <ClCompile Include="StatisticsManager.cpp">
       <Filter>source files</Filter>
     </ClCompile>
-    <ClCompile Include="createTablequ.cpp" />
-    <ClCompile Include="Room.cpp" />
-    <ClCompile Include="Question.cpp" />
+    <ClCompile Include="createTablequ.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Question.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Room.cpp">
+      <Filter>source files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Communicator.h">

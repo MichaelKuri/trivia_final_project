@@ -101,17 +101,27 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo ri)
 
 
 
-//RequestResult MenuRequestHandler::getPersonalStats(RequestInfo ri)
-//{
-//	/*this->m_handleFactory.*/
-//}
+RequestResult MenuRequestHandler::getPersonalStats(RequestInfo ri)
+{
+	RequestResult res;
+	std::string name = m_user.getUsername();
+	std::vector<std::string> personalStats = this->m_handleFactory.getStatisticsManager().getUserStatistics(name);
+	getPersonalStatsResponse getpersonalStat;
+	res.response = JsonResponsePacketSerializer::SerializeResponse(getpersonalStat);
+	res.newHandler = this;
+	return res;
+}
 
 
-//RequestResult MenuRequestHandler::getHighScore(RequestInfo ri)
-//{
-//
-//
-//}
+RequestResult MenuRequestHandler::getHighScore(RequestInfo ri)
+{
+	RequestResult res;
+	std::vector<std::string> personalStats = this->m_handleFactory.getStatisticsManager().getHighScore();
+	getHighScoreResponse gethighScore;
+	res.response = JsonResponsePacketSerializer::SerializeResponse(gethighScore);
+	res.newHandler = this;
+	return res;
+}
 
 
 RequestResult MenuRequestHandler::getRooms(RequestInfo)
