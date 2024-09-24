@@ -144,6 +144,7 @@
     <ClCompile Include="WSAInitializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CloseRoomResponse.h" />
     <ClInclude Include="CreateRoomRequest.h" />
     <ClInclude Include="CreateRoomResponse.h" />
     <ClInclude Include="ErrorResponse.h" />
@@ -152,6 +153,7 @@
     <ClInclude Include="GetPlayersInRoomRequest.h" />
     <ClInclude Include="GetPlayersInRoomResponse.h" />
     <ClInclude Include="GetRoomsResponse.h" />
+    <ClInclude Include="GetRoomStateResponse.h" />
     <ClInclude Include="Helper.h" />
     <ClInclude Include="Communicator.h" />
     <ClInclude Include="IDatabase.h" />
@@ -161,6 +163,7 @@
     <ClInclude Include="json.hpp" />
     <ClInclude Include="JsonRequestPacketDeserializer.h" />
     <ClInclude Include="JsonResponsePacketSerializer.h" />
+    <ClInclude Include="LeaveRoomResponse.h" />
     <ClInclude Include="LoginRequest.h" />
     <ClInclude Include="LoggedUser.h" />
     <ClInclude Include="LoginManager.h" />
@@ -182,6 +185,7 @@
     <ClInclude Include="SignupResponse.h" />
     <ClInclude Include="sqlite3.h" />
     <ClInclude Include="SqliteDataBase.h" />
+    <ClInclude Include="StartGameResponse.h" />
     <ClInclude Include="StatisticsManager.h" />
     <ClInclude Include="WSAInitializer.h" />
   </ItemGroup>

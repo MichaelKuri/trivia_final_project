@@ -1,4 +1,3 @@
-
 #include "Communicator.h"
 #include <exception>
 #include <iostream>

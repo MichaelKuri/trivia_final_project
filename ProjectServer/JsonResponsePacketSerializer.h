@@ -10,6 +10,10 @@
 #include "CreateRoomResponse.h"
 #include "getHighScoreResponse.h"
 #include "getPersonalStatsResponse.h"
+#include "CloseRoomResponse.h"
+#include "StartGameResponse.h"
+#include "GetRoomStateResponse.h"
+#include "LeaveRoomResponse.h"
 #include <vector>
 #include <cstring>
 #include "json.hpp"
@@ -34,6 +38,11 @@ public:
 	static std::vector<char> SerializeResponse(const CreateRoomResponse& response);
 	static std::vector<char> SerializeResponse(const getHighScoreResponse& response);
 	static std::vector<char> SerializeResponse(const getPersonalStatsResponse& response);
+
+	static std::vector<char> SerializeResponse(const CloseRoomResponse& response);
+	static std::vector<char> SerializeResponse(const StartGameResponse& response);
+	static std::vector<char> SerializeResponse(const GetRoomStateResponse& response);
+	static std::vector<char> SerializeResponse(const LeaveRoomResponse& response);
 
 private:
 

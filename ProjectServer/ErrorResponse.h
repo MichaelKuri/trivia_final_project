@@ -1,12 +1,18 @@
 #pragma once
 #include <string>
 
-class ErrorResponse
+struct ErrorResponse
 {
-public:
-
 	std::string message;
-private:
+}; 
 
-};
 
+//struct SignupResponse
+//{
+//	unsigned int _status;
+//};
+
+//struct LoginResponse
+//{
+//	unsigned int _status;
+//};

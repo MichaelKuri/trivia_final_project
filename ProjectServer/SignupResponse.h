@@ -1,14 +1,7 @@
 #pragma once
+//#include "ErrorResponse.h"
 
-
-class SignupResponse
+struct SignupResponse
 {
-public:
-
 	unsigned int _status;
-
-private:
-
 };
-
-

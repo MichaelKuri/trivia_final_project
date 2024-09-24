@@ -174,6 +174,18 @@
     <ClInclude Include="RoomManager.h">
       <Filter>heder files</Filter>
     </ClInclude>
+    <ClInclude Include="CloseRoomResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="StartGameResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="GetRoomStateResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="LeaveRoomResponse.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="heder files">
