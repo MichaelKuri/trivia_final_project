@@ -1,9 +1,8 @@
 #include "SqliteDataBase.h"
-#include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
 #include "sqlite3.h"
-#include "Question.h"
+
 
 //open data base and create new tables: USER, Quiz, USERS_STATS
 bool SqliteDataBase::open()

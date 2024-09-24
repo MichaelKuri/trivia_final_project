@@ -1,11 +1,6 @@
 #pragma once
-#include <string>
 #include <list>
-#include <vector>
-
 #include "Question.h"
-
-
 class IDatabase
 {
 public:
@@ -15,13 +10,13 @@ public:
 	virtual int doesPasswordMatch(std::string, std::string)=0;
 	virtual int addNewUser(std::string, std::string, std::string)=0;
 
-	virtual std::list<Question> getQuestions(int einlimusag);
-	virtual float getPlayersAverageAnswerTime(std::string einlimusag);
-	virtual int getNumOfCorrectAnswers(std::string einlimusag);
-	virtual int getNumOfTotalAnswers(std::string );
-	virtual int getNumOfPlayerGames(std::string einlimusag);
-	virtual int getPlayerScore(std::string einlimusag);
-	virtual std::vector<std::string> getHighScores();
+	virtual std::list<Question> getQuestions(int ) = 0;
+	virtual float getPlayerAverageAnswerTime(std::string ) = 0;
+	virtual int getNumOfCorrectAnswers(std::string ) = 0;
+	virtual int getNumOfTotalAnswers(std::string ) = 0;
+	virtual int getNumOfPlayerGames(std::string ) = 0;
+	virtual int getPlayerScore(std::string einlimsag) = 0;
+	virtual std::vector<std::string> getHighScores() = 0;
 
 private:
 	std::string dbName = "triviaDb";

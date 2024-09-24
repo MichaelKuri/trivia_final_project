@@ -1,8 +1,7 @@
 #pragma once
-#include <string>
 #include "IDatabase.h"
-#include<list>
-#include "Question.h"
+
+
 class SqliteDataBase : public IDatabase
 {
 public:

@@ -103,18 +103,16 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo ri)
 
 //RequestResult MenuRequestHandler::getPersonalStats(RequestInfo ri)
 //{
-//
-//
+//	/*this->m_handleFactory.*/
 //}
-//
-//
+
+
 //RequestResult MenuRequestHandler::getHighScore(RequestInfo ri)
 //{
 //
 //
 //}
-//
-//
+
 
 RequestResult MenuRequestHandler::getRooms(RequestInfo)
 {

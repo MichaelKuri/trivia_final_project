@@ -12,7 +12,7 @@ class MenuRequestHandler;
 class RequestHandlerFactory
 {
 public:
-	RequestHandlerFactory(IDatabase* database) : _m_database(database), _m_loginManager(database){};
+	RequestHandlerFactory(IDatabase* database) : _m_database(database), _m_loginManager(database), m_statisticsManager(_m_database) {};
 	LoginRequestHandler* createLoginRequestHandler();
 	LoginManager& getLoginManager();
 	MenuRequestHandler* createMenuRequestHandler(LoggedUser);
