@@ -25,15 +25,16 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo ri)
     return rr;
 }
 
+//TO DO - hendle exeptions 
 RequestResult LoginRequestHandler::login(RequestInfo rinfo )
 {
     RequestResult rResult;
     LoginRequest logReq = JsonRequestPacketDeserializer::deserializeLoginRequest(rinfo.Buffer);
-    bool loginChecked = this->_m_handlerFactory.getLoginManager().login(logReq.username, logReq.password);
+    bool loginChecked = this->m_handlerFactory.getLoginManager().login(logReq.username, logReq.password);
 
     if (loginChecked)
     {
-        rResult.newHandler = _m_handlerFactory.createMenuRequestHandler(LoggedUser(logReq.username));
+        rResult.newHandler = m_handlerFactory.createMenuRequestHandler(LoggedUser(logReq.username));
         LoginResponse lr;
         lr._status = SUCSESS;
         rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
@@ -42,30 +43,31 @@ RequestResult LoginRequestHandler::login(RequestInfo rinfo )
     {
         LoginResponse lr;
         lr._status = FAILD;
-        rResult.newHandler = _m_handlerFactory.createLoginRequestHandler();
+        rResult.newHandler = m_handlerFactory.createLoginRequestHandler();
         rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
     }
     return rResult;
 }
 
+//TO DO - hendle exeptions 
 RequestResult LoginRequestHandler::signup(RequestInfo rinfo)
 {
     RequestResult rResult;
     SignupRequest logReq = JsonRequestPacketDeserializer::deserializeSignupRequest(rinfo.Buffer);
-    bool loginChecked = this->_m_handlerFactory.getLoginManager().signup(logReq.username, logReq.password, logReq.email);
+    bool loginChecked = this->m_handlerFactory.getLoginManager().signup(logReq.username, logReq.password, logReq.email);
 
     if (loginChecked)
     {
         LoginResponse lr;
         lr._status = SUCSESS;
-        rResult.newHandler = _m_handlerFactory.createMenuRequestHandler(LoggedUser(logReq.username));
+        rResult.newHandler = m_handlerFactory.createMenuRequestHandler(LoggedUser(logReq.username));
         rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
     }
     else
     {
         LoginResponse lr;
         lr._status = FAILD;
-        rResult.newHandler = _m_handlerFactory.createLoginRequestHandler();
+        rResult.newHandler = m_handlerFactory.createLoginRequestHandler();
         rResult.response = JsonResponsePacketSerializer::SerializeResponse(lr);
     }
     return rResult;

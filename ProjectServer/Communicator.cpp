@@ -89,7 +89,7 @@ void Communicator::startHandleRequests()
 	tr.detach();
 }
 
-
+//TO DO sprate to multipile func to check messages
 void Communicator::handleNewClient(const SOCKET client_socket)
 {
     char firstmsg[7] = "hello\0";
@@ -116,6 +116,8 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 
             int msgCode = static_cast<int>(code[0]);
 
+            assert(msgCode >= 0);
+
             if (msgCode == 0)
             {
                 std::cout << "Error: can't read from user";
@@ -125,7 +127,9 @@ void Communicator::handleNewClient(const SOCKET client_socket)
 
             rinfo.id = msgCode;
 
+            assert(rinfo.id >= 100);
             char lenField[4];
+
             bytesReceived = recv(client_socket, lenField, 4, 0);
             if (bytesReceived != 4) 
             {
