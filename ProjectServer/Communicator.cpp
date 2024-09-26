@@ -1,5 +1,3 @@
-
-#include "Communicator.h"
 #include <exception>
 #include <iostream>
 #include <string>
@@ -9,6 +7,7 @@
 #include "Helper.h"
 #include "ErrorResponse.h"
 #include "JsonResponsePacketSerializer.h"
+#include "Communicator.h"
 
 // using static const instead of macros 
 static const unsigned short PORT = 8826;
@@ -47,7 +46,6 @@ Communicator::~Communicator()
 void Communicator::serve()
 {
 	bindAndListen();
-
 
 	while (true)
 	{
@@ -94,8 +92,10 @@ void Communicator::startHandleRequests()
 
 void Communicator::handleNewClient(const SOCKET client_socket)
 {
-    std::string firstmsg = "hello";
-    send(client_socket, firstmsg.c_str(), 6, 0);
+    char firstmsg[7] = "hello\0";
+    send(client_socket, firstmsg, 6, 0);
+    int check = recv(client_socket, firstmsg, 7, 0);
+    std::cout << firstmsg <<"\n";
     RequestInfo rinfo;
 
     try

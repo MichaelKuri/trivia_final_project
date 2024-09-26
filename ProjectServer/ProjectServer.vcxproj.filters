@@ -186,9 +186,13 @@
     <ClInclude Include="RoomManager.h">
       <Filter>heder files</Filter>
     </ClInclude>
-    <ClInclude Include="RoomMemberRequestHandler.h" />
-    <ClInclude Include="triviaProtocol.h" />
     <ClInclude Include="RoomAdminRequestHandler.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="triviaProtocol.h">
+      <Filter>heder files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomMemberRequestHandler.h">
       <Filter>heder files</Filter>
     </ClInclude>
   </ItemGroup>

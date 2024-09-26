@@ -1,23 +1,23 @@
 #pragma once
 
-#define	SUCSESS 999
-#define	FAILD	900
+const int	SUCSESS = 99;
+const int	FAILD = 90;
 
-#define	LOGIN	101
-#define	SIGNOUT	102
+const int	LOGIN = 11;
+const int	SIGNOUT = 12;
 
-#define	CREATE_ROOM	201
-#define	JOIN_ROOM	202
-#define	GET_ROOM	203
-#define GET_PLAYERS_IN_ROOM	204
-#define CLOSE_ROOM 205
-#define GET_ROOM_STATE 206
-#define LEAVE_ROOM 207
+const int	CREATE_ROOM = 21;
+const int	JOIN_ROOM = 22;
+const int	GET_ROOM = 23;
+const int GET_PLAYERS_IN_ROOM = 24;
+const int CLOSE_ROOM = 25;
+const int GET_ROOM_STATE = 26;
+const int LEAVE_ROOM = 27;
 
-#define	GET_HIGH_SCORE	301
-#define	GET_PERSONAL_STAT	302
+const int	GET_HIGH_SCORE	= 31;
+const int	GET_PERSONAL_STAT = 32;
 
 
-#define START_GAME 401
+const int START_GAME = 41;
 
 

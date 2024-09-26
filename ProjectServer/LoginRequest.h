@@ -3,8 +3,8 @@
 class  LoginRequest
 {
 public:
-	std::string username;
-	std::string password;
+    std::string username;
+    std::string password;
 
 private:
 

@@ -25,16 +25,6 @@ private:
 
 	void bindAndListen();
 	void handleNewClient(const SOCKET client_socket);
-	//void safeDeleteUser(const SOCKET id);
-	//BONUS
-	//-m_cryptoAlgorithm : ICryptoAlgorithm
-	//void handleReceivedMessages();
-	//std::string getCurrentUser();
-	//std::string getNextUser();
-	//std::string get_user_name(const SOCKET id);
-	//void addReceivedMessage(RecvMessage*);
-	//static RecvMessage* build_receive_message(const SOCKET client_socket, const int msg_code);
-	//std::string getAllUsernames();
 		
 
 	std::map<SOCKET, IRequestHandler*> _m_clients;
